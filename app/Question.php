@@ -19,6 +19,11 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * タイトル名からスラグを設定
+     *
+     * @param $value タイトル名
+     */
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;

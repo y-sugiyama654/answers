@@ -29,4 +29,24 @@ class Question extends Model
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    /**
+     * questionsのリンクを取得
+     *
+     * @return string questionsのリンク
+     */
+    public function getUrlAttribute()
+    {
+        return route('questions.show', $this->id);
+    }
+
+    /**
+     * created_atのフォーマットを変更して取得(ex: 1 hour ago, 2 days ago)
+     *
+     * @return mixed 作成日時
+     */
+    public function getCreatedDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
 }

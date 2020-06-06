@@ -46,4 +46,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Question::class);
     }
+
+    /**
+     * userのリンクを取得
+     *
+     * @return string questionsのリンク
+     */
+    public function getUrlAttribute()
+    {
+        //return route('questions.show', $this->id);
+        return '#';
+    }
 }

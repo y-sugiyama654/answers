@@ -53,7 +53,10 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // 閲覧数を1たして保存
+        $question->increment('views');
+
+        return view('questions.show', compact('question'));
     }
 
     /**

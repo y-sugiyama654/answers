@@ -67,4 +67,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Answer::class);
     }
+
+    /**
+     * userにアバター画像を取得
+     */
+    public function getAvatarAttribute()
+    {
+        $email = $this->email;
+        $size = 32;
+
+        return $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
+
+    }
 }

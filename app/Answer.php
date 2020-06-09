@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Parsedown;
 
 class Answer extends Model
 {
@@ -47,5 +48,15 @@ class Answer extends Model
         static::created(function ($answer) {
             $answer->question->increment('answers_count');
         });
+    }
+
+    /**
+     * created_atのフォーマットを変更して取得(ex: 1 hour ago, 2 days ago)
+     *
+     * @return mixed 作成日時
+     */
+    public function getCreatedDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

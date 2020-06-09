@@ -35,4 +35,17 @@ class Answer extends Model
     {
         return Parsedown::instance()->text($this->body);
     }
+
+    /**
+     * answerが作成された時に発火するイベント
+     * questions.answers_countカラムに1足す
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($answer) {
+            $answer->question->increment('answers_count');
+        });
+    }
 }

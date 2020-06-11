@@ -53,7 +53,13 @@ class Answer extends Model
 
         // questionが削除された時、questions.answers_countカラムから1引く
         static::deleted(function ($answer) {
-           $answer->question->decrement('answers_count');
+            $question = $answer->question;
+            $question->decrement('answers_count');
+            // ベストアンサーが削除された場合はquestion.best_answer_idをNULLにする
+            if ($question->best_answer_id === $answer->id) {
+                $question->best_answer_id = NULL;
+                $question->save();
+            }
         });
     }
 
@@ -65,5 +71,13 @@ class Answer extends Model
     public function getCreatedDateAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    /**
+     * answerがベストアンサーに選出されていたら、vote-acceptedを返す
+     */
+    public function getStatusAttribute()
+    {
+        return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
     }
 }

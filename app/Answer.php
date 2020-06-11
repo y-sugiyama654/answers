@@ -7,6 +7,8 @@ use Parsedown;
 
 class Answer extends Model
 {
+    protected $fillable = ['body', 'user_id'];
+
     /**
      * Answerに紐づくquestionを取得
      *

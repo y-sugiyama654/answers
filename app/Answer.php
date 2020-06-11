@@ -66,4 +66,12 @@ class Answer extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
+    /**
+     * answerがベストアンサーに選出されていたら、vote-acceptedを返す
+     */
+    public function getStatusAttribute()
+    {
+        return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
+    }
 }

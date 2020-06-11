@@ -41,14 +41,19 @@ class Answer extends Model
 
     /**
      * answerが作成された時に発火するイベント
-     * questions.answers_countカラムに1足す
      */
     public static function boot()
     {
         parent::boot();
 
+        // questionが作成された時、questions.answers_countカラムに1足す
         static::created(function ($answer) {
             $answer->question->increment('answers_count');
+        });
+
+        // questionが削除された時、questions.answers_countカラムから1引く
+        static::deleted(function ($answer) {
+           $answer->question->decrement('answers_count');
         });
     }
 

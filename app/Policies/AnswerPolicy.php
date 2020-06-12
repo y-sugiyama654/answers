@@ -23,6 +23,17 @@ class AnswerPolicy
     }
 
     /**
+     * ユーザーIDとanswer.question.user_idが一致する場合に認可
+     *
+     * @param User $user ユーザー情報
+     * @param Answer $answer answer情報
+     */
+    public function accept(User $user, Answer $answer)
+    {
+        return $user->id === $answer->question->user_id;
+    }
+
+    /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user

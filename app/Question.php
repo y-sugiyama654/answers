@@ -86,4 +86,15 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    /**
+     * アンサーとベストアンサーを紐付ける
+     *
+     * @param Answer $answer answer情報
+     */
+    public function acceptBestAnswer(Answer $answer)
+    {
+        $this->best_answer_id = $answer->id;
+        $this->save();
+    }
 }

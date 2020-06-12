@@ -27,3 +27,4 @@ Route::get('/questions/{question}/answers/{answer}/edit', 'AnswersController@edi
 Route::patch('/questions/{question}/answers/{answer}', 'AnswersController@update')->name('answers.update');
 Route::delete('/questions/{question}/answers/{answer}', 'AnswersController@destroy')->name('answers.destroy');
 Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');
+Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');

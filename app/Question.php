@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Parsedown;
 
@@ -96,5 +97,45 @@ class Question extends Model
     {
         $this->best_answer_id = $answer->id;
         $this->save();
+    }
+
+    /**
+     * questionに紐づくfavoritesを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
+
+    /**
+     * userに紐づくfavoriteが1つ以上存在するか確認
+     *
+     * @return bool
+     */
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', Auth::id())->count() > 0;
+    }
+
+    /**
+     * userに紐づくfavoriteが1つ以上存在するか確認
+     *
+     * @return bool
+     */
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    /**
+     * userに紐づくfavoriteのカウントを取得
+     *
+     * @return mixed
+     */
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
     }
 }

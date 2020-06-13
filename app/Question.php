@@ -97,4 +97,14 @@ class Question extends Model
         $this->best_answer_id = $answer->id;
         $this->save();
     }
+
+    /**
+     * questionに紐づくfavoritesを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

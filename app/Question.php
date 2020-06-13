@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Parsedown;
 
@@ -115,7 +116,7 @@ class Question extends Model
      */
     public function isFavorited()
     {
-        return $this->favorites->where('user_id', auth()->id)->count() > 0;
+        return $this->favorites()->where('user_id', Auth::id())->count() > 0;
     }
 
     /**

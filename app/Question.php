@@ -107,4 +107,34 @@ class Question extends Model
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
+
+    /**
+     * userに紐づくfavoriteが1つ以上存在するか確認
+     *
+     * @return bool
+     */
+    public function isFavorited()
+    {
+        return $this->favorites->where('user_id', auth()->id)->count() > 0;
+    }
+
+    /**
+     * userに紐づくfavoriteが1つ以上存在するか確認
+     *
+     * @return bool
+     */
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    /**
+     * userに紐づくfavoriteのカウントを取得
+     *
+     * @return mixed
+     */
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
+    }
 }

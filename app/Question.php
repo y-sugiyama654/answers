@@ -138,4 +138,14 @@ class Question extends Model
     {
         return $this->favorites->count();
     }
+
+    /**
+     * このvotableを付けた全userの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function votes()
+    {
+        return $this->morphedByMany(User::class, 'votable');
+    }
 }

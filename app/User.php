@@ -88,4 +88,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Question::class, 'favorites')->withTimestamps;
     }
+
+    /**
+     * このvotableを付けた全questionの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function voteQuestions()
+    {
+        return $this->morphedByMany(Question::class, 'votable');
+    }
+
+    /**
+     * このvotableを付けた全answerの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function voteAnswers()
+    {
+        return $this->morphedByMany(Answer::class, 'votable');
+    }
 }

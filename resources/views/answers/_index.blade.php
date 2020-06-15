@@ -9,48 +9,9 @@
                 @include('layouts._messages')
                 @foreach ($answers as $answer)
                     <div class="media">
-                        <div class="d-flex flex-column vote-controls">
-                            <a title="This answer is useful"
-                               class="vote-up {{ Auth::guest() ? 'off' : '' }}"
-                               onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();"
-                            >
-                                <i class="fas fa-caret-up fa-3x"></i>
-                            </a>
-                            <form action="/answers/{{ $answer->id }}/vote" id="up-vote-answer-{{ $answer->id }}" method="POST" style="display:none;">
-                                @csrf
-                                <input type="hidden" name="vote" value="1">
-                            </form>
-                            <span class="votes-count">{{ $answer->votes_count }}</span>
-                            <a title="This question is not useful"
-                               class="vote-down {{ Auth::guest() ? 'off' : '' }}"
-                               onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();"
-                            >
-                                <i class="fas fa-caret-down fa-3x"></i>
-                            </a>
-                            <form action="/answers/{{ $answer->id }}/vote" id="down-vote-answer-{{ $answer->id }}" method="POST" style="display:none;">
-                                @csrf
-                                <input type="hidden" name="vote" value="-1">
-                            </form>
-                            @can ('accept', $answer)
-                                <a title="Mark this answer as best answer"
-                                   class="{{ $answer->status }} mt-3"
-                                   onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
-                                >
-                                    <i class="fas fa-check fa-2x"></i>
-                                </a>
-                                <form action="{{ route('answers.accept', $answer->id) }}" id="accept-answer-{{ $answer->id }}" method="POST" style="display:none;">
-                                    @csrf
-                                </form>
-                            @else
-                                @if ($answer->is_best)
-                                    <a title="The question owner accepted"
-                                       class="{{ $answer->status }} mt-3"
-                                    >
-                                        <i class="fas fa-check fa-2x"></i>
-                                    </a>
-                                @endif
-                            @endcan
-                        </div>
+                        @include ('shared._vote', [
+                            'model' => $answer,
+                        ])
                         <div class="media-body">
                             {!! $answer->body_html !!}
                             <div class="row">

@@ -9,6 +9,8 @@ use Parsedown;
 
 class Question extends Model
 {
+    use VotableTrait;
+
     protected $fillable = ['title', 'body'];
 
     /**
@@ -137,35 +139,5 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites->count();
-    }
-
-    /**
-     * このvotableを付けた全userの取得
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function votes()
-    {
-        return $this->morphToMany(User::class, 'votable');
-    }
-
-    /**
-     * questionの投票に1加算
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function upVotes()
-    {
-        return $this->votes()->wherePivot('vote', 1);
-    }
-
-    /**
-     * questionの投票に1減算
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function downVotes()
-    {
-        return $this->votes()->wherePivot('vote', -1);
     }
 }

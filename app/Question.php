@@ -77,7 +77,7 @@ class Question extends Model
      */
     public function getBodyHtmlAttribute()
     {
-        return Parsedown::instance()->text($this->body);
+        return $this->bodyHtml();
     }
 
     /**
@@ -139,5 +139,36 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites->count();
+    }
+
+    /**
+     * サニタイズと文字数制限の処理
+     *
+     * @return string body本文
+     */
+    public function getExcerptAttribute()
+    {
+        return $this->excerpt(250);
+    }
+
+    /**
+     * bodyを処理して返却
+     *
+     * @param $length 文字数
+     * @return string body本文
+     */
+    private function excerpt($length)
+    {
+        return Str::limit(strip_tags($this->bodyHtml()), $length);
+    }
+
+    /**
+     * htmlタグを展開
+     *
+     * @return string body本文
+     */
+    private function bodyHtml()
+    {
+        return Parsedown::instance()->text($this->body);
     }
 }

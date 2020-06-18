@@ -20,6 +20,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * アクセサで取得したプロパティをvue用に追加
+     *
+     * @var string[]
+     */
+    protected $appends = ['url', 'avatar'];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

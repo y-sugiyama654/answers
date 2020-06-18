@@ -9,7 +9,19 @@ class Answer extends Model
 {
     use VotableTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['body', 'user_id'];
+
+    /**
+     * アクセサで取得したプロパティをvue用に追加
+     *
+     * @var string[]
+     */
+    protected $appends = ['created_date'];
 
     /**
      * Answerに紐づくquestionを取得

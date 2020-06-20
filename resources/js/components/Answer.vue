@@ -1,5 +1,11 @@
 <script>
     export default {
-        props: ['answer']
+        props: ['answer'],
+
+        data () {
+            return {
+                editing: false,
+            }
+        }
     }
 </script>

@@ -1,15 +1,18 @@
-<answer :answer="{{ $answers }}" inline-template>
+<answer :answer="{{ $answer }}" inline-template>
     <div class="media post">
         @include ('shared._vote', [
             'model' => $answer,
         ])
         <div class="media-body">
-            <form v-if="editing">
-                Edit answer form
-                <button @click="editing = false">Update</button>
+            <form v-if="editing" @submit.prevent="update">
+                <div class="form-group">
+                    <textarea v-model="body" class="form-control" rows="10"></textarea>
+                </div>
+                <button type="submit">Update</button>
+                <button type="button" @click="editing = false">Cancel</button>
             </form>
             <div v-else>
-                {!! $answer->body_html !!}
+                <div v-html="bodyHtml"></div>
                 <div class="row">
                     <div class="col-4">
                         <div class="ml-auto">

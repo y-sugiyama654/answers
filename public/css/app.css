@@ -17075,3 +17075,7 @@ form.form-delete {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+[v-cloal] {
+  display: none;
+}
+

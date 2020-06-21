@@ -34,9 +34,15 @@
                     alert(res.data.message);
                 })
                 .catch(err => {
-                    console.log('Something went wrong')
+                    alert(err.response.data.message);
                 });
             }
-        }
+        },
+
+        computed: {
+            isInvalid () {
+                return this.body.length < 10;
+            }
+        },
     }
 </script>

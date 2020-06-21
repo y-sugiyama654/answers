@@ -21,7 +21,7 @@ class Answer extends Model
      *
      * @var string[]
      */
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'body_html'];
 
     /**
      * Answerに紐づくquestionを取得

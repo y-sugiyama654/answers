@@ -1923,18 +1923,33 @@ __webpack_require__.r(__webpack_exports__);
   props: ['answer'],
   data: function data() {
     return {
-      isBest: this.answer.is_best
+      isBest: this.answer.is_best,
+      id: this.answer.id
     };
+  },
+  methods: {
+    create: function create() {
+      var _this = this;
+
+      axios.post("/answers/".concat(this.id, "/accept")).then(function (res) {
+        _this.$toast.success(res.data.message, 'success', {
+          timeout: 3000,
+          position: 'bottomLeft'
+        });
+
+        _this.isBest = true;
+      });
+    }
   },
   computed: {
     canAccept: function canAccept() {
       return true;
     },
     accepted: function accepted() {
-      return !this.canAccept && this.answer.is_best;
+      return !this.canAccept && this.isBest;
     },
     classes: function classes() {
-      return ['mt-2', this.accepted ? 'vote-accepted' : ''];
+      return ['mt-2', this.isBest ? 'vote-accepted' : ''];
     }
   }
 });
@@ -38390,7 +38405,13 @@ var render = function() {
           "a",
           {
             class: _vm.classes,
-            attrs: { title: "Mark this answer as best answer" }
+            attrs: { title: "Mark this answer as best answer" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.create($event)
+              }
+            }
           },
           [_c("i", { staticClass: "fas fa-check fa-2x" })]
         )

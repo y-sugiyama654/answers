@@ -16,7 +16,7 @@
                         </div>
                         <hr>
                         <div class="media">
-                            <vote :model="{{ $question }}" :name="'question'"></vote>
+                            <vote :model="{{ $question }}" name="question"></vote>
                             <div class="media-body">
                                 {!! $question->body_html !!}
                                 <div class="row">

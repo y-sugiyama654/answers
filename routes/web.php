@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('questions', 'QuestionsController')->except('show');
 Route::post('/questions/{question}/answers', 'AnswersController@store')->name('answers.store');
+Route::get('/questions/{question}/answers', 'AnswersController@index')->name('answers.index');
 Route::get('/questions/{question}/answers/{answer}/edit', 'AnswersController@edit')->name('answers.edit');
 Route::patch('/questions/{question}/answers/{answer}', 'AnswersController@update')->name('answers.update');
 Route::delete('/questions/{question}/answers/{answer}', 'AnswersController@destroy')->name('answers.destroy');

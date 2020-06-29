@@ -20,9 +20,13 @@
 </template>
 <script>
     import MarkdownIt from 'markdown-it';
+    import prism from 'markdown-it-prism';
     import autosize from 'autosize';
+    import 'prismjs/themes/prism.css';
 
     const md = MarkdownIt();
+    md.use(prism);
+
     export default {
         props: ['body'],
         computed: {

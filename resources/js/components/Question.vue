@@ -58,7 +58,6 @@
 <script>
     import Vote from './Vote.vue';
     import UserInfo from './UserInfo.vue';
-    import Prism from 'prismjs';
     import modification from '../mixins/modification.js';
     import MEditor from './MEditor.vue';
     export default {

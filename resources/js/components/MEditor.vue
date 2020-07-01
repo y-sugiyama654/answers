@@ -33,9 +33,6 @@
                 return md.render(this.body);
             }
         },
-        mounted () {
-            autosize(this.$el.querySelector('textarea'));
-        },
         updated () {
             autosize(this.$el.querySelector('textarea'));
         }

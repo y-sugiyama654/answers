@@ -2416,21 +2416,25 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     add: function add(answer) {
-      this.answers.push(answer);
-      this.count++;
-      this.highlight();
-    },
-    fetch: function fetch(endpoint) {
       var _this = this;
 
+      this.answers.push(answer);
+      this.count++;
+      this.$nextTick(function () {
+        _this.highlight("answer-".concat(answer.id));
+      });
+    },
+    fetch: function fetch(endpoint) {
+      var _this2 = this;
+
       axios.get(endpoint).then(function (_ref) {
-        var _this$answers;
+        var _this2$answers;
 
         var data = _ref.data;
 
-        (_this$answers = _this.answers).push.apply(_this$answers, _toConsumableArray(data.data));
+        (_this2$answers = _this2.answers).push.apply(_this2$answers, _toConsumableArray(data.data));
 
-        _this.nextUrl = data.next_page_url;
+        _this2.nextUrl = data.next_page_url;
       });
     },
     remove: function remove(index) {
@@ -55406,6 +55410,7 @@ var render = function() {
           [
             _c("div", {
               ref: "bodyHtml",
+              attrs: { id: _vm.uniqueName },
               domProps: { innerHTML: _vm._s(_vm.bodyHtml) }
             }),
             _vm._v(" "),
@@ -69113,7 +69118,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight() {
-      var el = this.$refs.bodyHtml;
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var el;
+
+      if (!id) {
+        el = this.$refs.bodyHtml;
+      } else {
+        el = document.getElementById(id);
+      }
+
       console.log('el', el);
       if (el) prismjs__WEBPACK_IMPORTED_MODULE_0___default.a.highlightAllUnder(el);
     }

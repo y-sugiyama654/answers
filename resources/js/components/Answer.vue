@@ -2,15 +2,17 @@
     <div class="media post">
         <vote :model="answer" name="answer"></vote>
         <div class="media-body">
-            <form v-if="editing" @submit.prevent="update">
+            <form v-show="authorize('modify', answer) && editing" @submit.prevent="update">
                 <div class="form-group">
-                    <textarea v-model="body" class="form-control" rows="10" required></textarea>
+                    <m-editor :body="body" :name="uniqueName">
+                        <textarea v-model="body" class="form-control" rows="10" required></textarea>
+                    </m-editor>
                 </div>
                 <button class="btn btn-primary" type="submit" :disabled="isInvalid">Update</button>
                 <button class="btn btn-outline-secondary" type="button" @click="cancel">Cancel</button>
             </form>
-            <div v-else>
-                <div v-html="bodyHtml"></div>
+            <div v-show="!editing">
+                <div :id="uniqueName" v-html="bodyHtml" ref="bodyHtml"></div>
                 <div class="row">
                     <div class="col-4">
                         <div class="ml-auto">
@@ -30,14 +32,12 @@
     </div>
 </template>
 <script>
-    import Vote from './Vote.vue';
-    import UserInfo from './UserInfo.vue';
+    import modification from '../mixins/modification.js';
     export default {
         props: ['answer'],
-        components: { Vote, UserInfo },
+        mixins: [modification],
         data () {
             return {
-                editing: false,
                 body: this.answer.body,
                 bodyHtml: this.answer.body_html,
                 id: this.answer.id,
@@ -47,51 +47,22 @@
         },
 
         methods: {
-            edit () {
+            setEditCache () {
                 this.beforeEditCache = this.body;
-                this.editing = true;
             },
-
-            cancel () {
+            restoreFromCache () {
                 this.body = this.beforeEditCache;
-                this.editing = false;
             },
-
-            update () {
-                axios.patch(this.endpoint, {
+            payload () {
+                return {
                     body: this.body,
-                })
-                .then(res => {
-                    this.editing = false;
-                    this.bodyHtml = res.data.body_html;
-                    this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
-                })
-                .catch(err => {
-                    this.$toast.error(err.response.data.message, 'Error', { timeout: 3000 });
-                });
+                };
             },
-
-            destroy () {
-                this.$toast.question('Are you sure about that?', 'Confirm', {
-                    timeout: 20000,
-                    close: false,
-                    overlay: true,
-                    displayMode: 'once',
-                    id: 'question',
-                    zindex: 999,
-                    position: 'center',
-                    buttons: [
-                        ['<button><b>YES</b></button>', (instance, toast) => {
-                            axios.delete(this.endpoint)
-                                .then(res => {
-                                    this.$emit('deleted')
-                                });
-                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                        }, true],
-                        ['<button>NO</button>', function (instance, toast) {
-                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                        }],
-                    ],
+            delete () {
+                axios.delete(this.endpoint)
+                .then(res => {
+                    this.$toast.success(res.data.message, "Success", { timeout: 2000 });
+                    this.$emit('deleted')
                 });
             }
         },
@@ -100,9 +71,11 @@
             isInvalid () {
                 return this.body.length < 10;
             },
-
             endpoint () {
                 return `/questions/${this.questionId}/answers/${this.id}`;
+            },
+            uniqueName() {
+                return `answer-${this.id}`;
             }
         },
     }

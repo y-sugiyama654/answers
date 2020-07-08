@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/token', 'Auth\LoginController@getToken');
+Route::middleware(['auth:api'])->group(function() {
+    Route::apiResource('/questions', 'Api\QuestionsController');
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

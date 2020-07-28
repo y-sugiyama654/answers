@@ -17,6 +17,9 @@ const routes = [
         path: '/my-posts',
         component: MyPostsPage,
         name: 'my-posts',
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/questions/:slug',

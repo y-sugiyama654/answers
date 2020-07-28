@@ -10,4 +10,12 @@ const router = new VueRouter({
     linkActiveClass: 'active'
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(r => r.meta.requiresAuth)) {
+      window.location = window.Auth.url
+      return
+  }
+  next()
+})
+
 export default router

@@ -72514,6 +72514,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: _routes__WEBPACK_IMPORTED_MODULE_2__["default"],
   linkActiveClass: 'active'
 });
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (r) {
+    return r.meta.requiresAuth;
+  })) {
+    window.location = window.Auth.url;
+    return;
+  }
+
+  next();
+});
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
@@ -72544,7 +72554,10 @@ var routes = [{
 }, {
   path: '/my-posts',
   component: _pages_MyPostsPage_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-  name: 'my-posts'
+  name: 'my-posts',
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/questions/:slug',
   component: _pages_QuestionPage_vue__WEBPACK_IMPORTED_MODULE_1__["default"],

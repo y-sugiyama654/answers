@@ -36,6 +36,17 @@
             return {
                 questions: []
             }
+        },
+        mounted() {
+          this.fetchQuestions();
+        },
+        methods: {
+            fetchQuestions (){
+                axios.get('/questions')
+                    .then(({ data }) => {
+                        this.questions = data.data
+                    })
+            }
         }
     }
 </script>

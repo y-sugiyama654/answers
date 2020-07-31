@@ -3060,6 +3060,19 @@ __webpack_require__.r(__webpack_exports__);
     return {
       questions: []
     };
+  },
+  mounted: function mounted() {
+    this.fetchQuestions();
+  },
+  methods: {
+    fetchQuestions: function fetchQuestions() {
+      var _this = this;
+
+      axios.get('/questions').then(function (_ref) {
+        var data = _ref.data;
+        _this.questions = data.data;
+      });
+    }
   }
 });
 

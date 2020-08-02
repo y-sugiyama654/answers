@@ -16,8 +16,8 @@
         "axios": "^0.19",
         "bootstrap": "^4.5.0",
         "cross-env": "^7.0",
-        "jquery": "^3.5",
-        "laravel-mix": "^5.0.4",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
         "markdown-it": "^11.0.0",
         "markdown-it-prism": "^2.1.0",
@@ -27,7 +27,8 @@
         "sass-loader": "^9.0.2",
         "vue": "^2.6.11",
         "vue-izitoast": "^1.2.1",
-        "vue-template-compiler": "^2.6.11"
+        "vue-router": "^3.3.4",
+        "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "izitoast": "^1.4.0"

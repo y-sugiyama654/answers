@@ -52,7 +52,7 @@
                 .then(({ data }) => {
                     this.answerIds = data.data.map(a => a.id);
                     this.answers.push(...data.data);
-                    this.nextUrl = data.next_page_url;
+                    this.nextUrl = data.links.next;
                 })
                 .then(() => {
                     this.answerIds.forEach(id => {

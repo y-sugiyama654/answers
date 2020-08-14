@@ -57,9 +57,15 @@
 </template>
 <script>
     import modification from '../mixins/modification.js';
+    import EventBus from '../event-bus';
     export default {
         props: ['question'],
         mixins: [modification],
+        mounted () {
+            EventBus.$on('answers-count-changed', (count) => {
+                this.question.answers_count = count;
+            })
+        },
         data () {
             return {
                 title: this.question.title,
@@ -99,12 +105,10 @@
             },
             delete () {
                 axios.delete(this.endpoint)
-                    .then(({ data }) => {
+                    .then(({data}) => {
                         this.$toast.success(data.message, "Success", { timeout: 2000 });
+                        this.$router.push({ name: 'questions' });
                     });
-                setTimeout(() => {
-                    window.location.href = "/questions";
-                }, 3000);
             }
         }
     }

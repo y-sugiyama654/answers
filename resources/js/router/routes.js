@@ -43,7 +43,6 @@ const routes = [
     {
         path: '*',
         component: NotFoundPage,
-        name: 'questions.show',
     }
 ];
 

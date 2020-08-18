@@ -56503,7 +56503,21 @@ var render = function() {
               _c("div", { staticClass: "d-flex align-items-center" }, [
                 _c("h1", [_vm._v(_vm._s(_vm.title))]),
                 _vm._v(" "),
-                _vm._m(0)
+                _c(
+                  "div",
+                  { staticClass: "ml-auto" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-outline-secondary",
+                        attrs: { exact: "", to: { name: "questions" } }
+                      },
+                      [_vm._v("Back to all Questions")]
+                    )
+                  ],
+                  1
+                )
               ])
             ]),
             _vm._v(" "),
@@ -56578,23 +56592,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-auto" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-secondary",
-          attrs: { href: "/questions" }
-        },
-        [_vm._v("Back to All Question")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -74108,7 +74106,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (r) {
     return r.meta.requiresAuth;
-  })) {
+  }) && !window.Auth.signedIn) {
     window.location = window.Urls.login;
     return;
   }
@@ -74170,8 +74168,7 @@ var routes = [{
   props: true
 }, {
   path: '*',
-  component: _pages_NotFoundPage_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-  name: 'questions.show'
+  component: _pages_NotFoundPage_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (routes);
 

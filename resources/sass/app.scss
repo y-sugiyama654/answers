@@ -17,6 +17,11 @@ body {
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
+// tailwindCSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .counters {
     margin-right: 30px;
     font-size: 10px;
